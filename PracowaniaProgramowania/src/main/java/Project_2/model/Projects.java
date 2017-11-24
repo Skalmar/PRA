@@ -1,64 +1,64 @@
 package Project_2.model;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "PERSONAL_INFO")
-public class PersonalInfo {
+@Table(name = "PROJECTS")
+public class Projects {
     @Id
     @GeneratedValue(generator = "gen")
     @SequenceGenerator(name="gen", sequenceName = "author_seq")
-    @Column(name = "personalInfo_id")
-    private int personalInfo_id;
+    @Column(name = "project_id")
+    private int project_id;
 
-    @Column(name = "firstLanguage", nullable = false)
-    private String languages;
+    List<Projects> projects;
 
-    @Column(name = "yearsOfExperience", nullable = false)
-    private int  yearsOfExperience;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "phoneNumber", length =  15, nullable = false)
-    private String  phoneNumber;
+    @Column(name = "start_date", nullable = false)
+    static ZonedDateTime start_date;
 
-    @Column(name = "jobPost", nullable = false)
-    private String jobPost;
+    @Column(name = "anticipated_end_date", nullable = false)
+    static ZonedDateTime anticipated_end_date;
 
-    public int getPersonalInfo_id() {
-        return personalInfo_id;
+    public int getProject_id() {
+        return project_id;
     }
 
-    public void setPersonalInfo_id(int personalInfo_id) {
-        this.personalInfo_id = personalInfo_id;
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 
-    public String getLanguages() {
-        return languages;
+    public String getName() {
+        return name;
     }
 
-    public void setLanguages(String languages) {
-        this.languages = languages;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getYearsOfExperience() {
-        return yearsOfExperience;
+    public static ZonedDateTime getStart_date() {
+        return start_date;
     }
 
-    public void setYearsOfExperience(int yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
+    public static void setStart_date(ZonedDateTime start_date) {
+        Projects.start_date = start_date;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public static ZonedDateTime getAnticipated_end_date() {
+        return anticipated_end_date;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getJobPost() {
-        return jobPost;
-    }
-
-    public void setJobPost(String jobPost) {
-        this.jobPost = jobPost;
+    public static void setAnticipated_end_date(ZonedDateTime anticipated_end_date) {
+        Projects.anticipated_end_date = anticipated_end_date;
     }
 }
