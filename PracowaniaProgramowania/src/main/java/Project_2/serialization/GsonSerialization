@@ -1,0 +1,53 @@
+package Project_2.serialization;
+import com.google.gson.GsonBuilder;
+import org.apache.log4j.Logger;
+import com.google.gson.Gson;
+import Project_2.model.*;
+import Project_2.serialization.ModelObjectsCreator;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Random;
+
+public class GsonSerialization {
+
+    final static org.apache.log4j.Logger logger = Logger.getLogger(GsonSerialization.class);
+
+
+    public static void printJson(){
+        //String firstName,String lastName,int salary,int pesel,Projects project,PersonalInfo personalInfo)
+        ZoneId zoneId = ZoneId.of("UTC+1");
+        ZonedDateTime zonedDateTime2a = ZonedDateTime.of(2015, 6, 30, 23, 45, 59, 1234, zoneId);
+        ZonedDateTime zonedDateTime2 = ZonedDateTime.of(2015, 11, 30, 23, 45, 59, 1234, zoneId);
+        PersonalInfo personalInfo = new PersonalInfo("polish",5,"+48 662 345 234","HR manager");
+        Projects project = new Projects("Self-development",zonedDateTime2a, zonedDateTime2);
+        Employees employee = new Employees("Edyta","Przybysz",1000 , 2018703743, project,personalInfo);
+
+
+
+        Gson gson = new Gson();
+        String serializedEmployees = gson.toJson(employee);
+        logger.info("Print employees json:");
+        System.out.println(serializedEmployees);
+
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        String prettySerializedEmployees  = gsonPretty.toJson(employee);
+        logger.info("Pretty-print employees json:");
+        System.out.println(prettySerializedEmployees);
+
+       Employees employee2 = gson.fromJson(serializedEmployees,Employees.class);
+       System.out.println(employee2.getFirstName() + " " + employee2.getLastName()+ "" + employee2.getPesel()+ "" + employee2.getPersonalInfo() + employee2.getManagers() + employee2.getSubworkers()+ employee2.getSalary());
+
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now.toString());
+        String serializedTime = gsonPretty.toJson(now);
+        System.out.println(serializedTime);
+        LocalDateTime now2 = gson.fromJson(serializedTime, LocalDateTime.class);
+        System.out.println(now2.toString());
+    }
+
+
+    public static void main(String [ ] args) {
+        printJson();
+    }
+}
