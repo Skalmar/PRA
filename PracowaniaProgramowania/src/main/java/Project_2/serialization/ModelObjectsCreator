@@ -1,0 +1,118 @@
+package Project_2.serialization;
+import Project_2.model.Projects;
+import Project_2.model.PersonalInfo;
+import Project_2.model.Employees;
+import org.joda.time.DateTime;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * Helper class which provides methods to create instances of hibernate.model classes
+ */
+public class ModelObjectsCreator {
+
+    Employees employee;
+    Employees employee2;
+    Projects project;
+    Projects project2;
+    PersonalInfo personalInfo;
+    PersonalInfo personalInfo2;
+
+    List<Employees> employees;
+
+    public Employees getEmployee() {
+        return employee;
+    }
+
+    public Employees employee2() {
+        return employee2;
+    }
+
+    public Projects getProject() {
+        return project;
+    }
+
+    public Projects getProject2() {
+        return project2;
+    }
+
+    public PersonalInfo getPersonalInfo() {
+        return personalInfo;
+    }
+
+    public PersonalInfo getPersonalInfo2() {
+        return personalInfo2;
+    }
+
+    public List<Employees> getEmployees() {
+        return employees;
+    }
+
+    public void init() {
+        employee = new Employees();
+        employee.setFirstName("Edyta");
+        employee.setLastName("Przybysz");
+        employee.setSalary(1000);
+        employee.setPesel(Math.abs(new Random().nextInt()));
+
+        employee2 = new Employees();
+        employee2.setFirstName("Maya");
+        employee2.setLastName("Gordon");
+        employee2.setSalary(1000);
+        employee2.setPesel(Math.abs(new Random().nextInt()));
+
+        //add project
+        Projects project = new Projects();
+        project.setName("Self-development");
+        ZoneId zoneId = ZoneId.of("UTC+1");
+        ZonedDateTime zonedDateTime2a = ZonedDateTime.of(2015, 6, 30, 23, 45, 59, 1234, zoneId);
+        project.setStart_date(zonedDateTime2a);
+        ZonedDateTime zonedDateTime2 = ZonedDateTime.of(2015, 11, 30, 23, 45, 59, 1234, zoneId);
+        project.setAnticipated_end_date(zonedDateTime2);
+
+        //add project2
+        Projects project2 = new Projects();
+        project2.setName("E-learning");
+        ZonedDateTime zonedDateTime3a = ZonedDateTime.of(2017, 10, 10, 8, 45, 59, 1234, zoneId);
+        project2.setStart_date(zonedDateTime3a);
+        ZonedDateTime zonedDateTime3 = ZonedDateTime.of(2017, 11, 28, 15, 0, 0, 0, zoneId);
+        project2.setAnticipated_end_date(zonedDateTime3);
+
+        //add personalinfo
+        PersonalInfo personalInfo = new PersonalInfo();
+        personalInfo.setLanguages("polish");
+        personalInfo.setJobPost("HR manager");
+        personalInfo.setPhoneNumber("+48 662 345 234");
+        personalInfo.setYearsOfExperience(5);
+
+        //add personalinfo2
+        PersonalInfo personalInfo2 = new PersonalInfo();
+        personalInfo2.setLanguages("english");
+        personalInfo2.setJobPost("Personal assistant");
+        personalInfo2.setPhoneNumber("+44 612 315 034");
+        personalInfo2.setYearsOfExperience(2);
+
+        employee.setProject(project);
+        employee2.setProject(project2);
+        employee.setPersonalInfo(personalInfo);
+        employee2.setPersonalInfo(personalInfo2);
+        employee.getSubworkers().add(employee2);
+        employee2.getSubworkers().add(employee);
+
+        employees = new ArrayList<Employees>();
+        employees.add(employee);
+        employees.add(employee2);
+
+    }
+
+    public ModelObjectsCreator() {
+        init();
+    }
+
+}
+
+
